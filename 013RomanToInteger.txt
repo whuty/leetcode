@@ -1,0 +1,25 @@
+static const auto _____ = []() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+};
+class Solution {
+public:
+    int romanToInt(string s) {
+        map<char,int> Roman;
+        Roman['I'] = 1;
+        Roman['V'] = 5;
+        Roman['X'] = 10;
+        Roman['L'] = 50;
+        Roman['C'] = 100;
+        Roman['D'] = 500;
+        Roman['M'] = 1000;
+        int n = s.length();
+        int val = 0;
+        for(int i = 0;i < s.length()-1;i++){
+            if(Roman[s[i]]<Roman[s[i+1]]){val -= Roman[s[i]];}
+            else {val += Roman[s[i]];}
+        }
+        val += Roman[s[s.length()-1]];
+        return val;
+    }
+};

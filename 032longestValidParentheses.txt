@@ -1,0 +1,27 @@
+static int x=[](){
+    std::ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    return 0;
+}();
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int n = s.size();
+        if(n == 0 || n == 1) return 0;
+        int ans = 0;
+        int start = 0;
+        stack<int> sta;
+        for(int i = 0;i < n; i++){
+            if(s[i] == '(') sta.push(i);
+            else if(!sta.empty()) {
+                sta.pop();
+                
+                ans = sta.empty() ? max(ans, i - start + 1) : max(ans, i - sta.top());
+
+            }
+            else start = i + 1;
+
+        }
+        return ans;
+    }
+};

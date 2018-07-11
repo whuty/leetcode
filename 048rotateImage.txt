@@ -1,0 +1,37 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        if (n == 1) return;
+        for(int i = 0;i <= (n-1)/2; i++) {
+            for(int j = 0; (j*2 < n-1 || (j*2==n-1 && j==i)); j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[n-1-j][i];
+                matrix[n-1-j][i] = matrix[n-1-i][n-1-j];
+                matrix[n-1-i][n-1-j] = matrix[j][n-1-i];
+                matrix[j][n-1-i] = tmp;
+            }
+        }
+    }
+};
+
+
+
+
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        for (int i = 0, j = matrix.size()-1; i < j; i++, j--)  
+        {  
+            for (int k = i, d = j; k < j; k++, d--)  
+            {  
+                int t = matrix[i][k];  
+                matrix[i][k] = matrix[d][i];  
+                matrix[d][i] = matrix[j][d];  
+                matrix[j][d] = matrix[k][j];  
+                matrix[k][j] = t;  
+            }  
+        }  
+    }
+};
+

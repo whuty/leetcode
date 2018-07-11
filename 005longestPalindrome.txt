@@ -1,0 +1,50 @@
+static const auto _____ = []() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  return nullptr;
+}();
+class Solution {
+public:
+    string preProcess(string s) {
+        int n = s.length();
+        if (n == 0) return "^$";
+        string ret = "^";
+        for (int i = 0; i < n; i++)
+            ret += "#" + s.substr(i, 1);
+ 
+        ret += "#$";
+        return ret;
+    }
+    string longestPalindrome(string s) {
+        string s_new = preProcess(s);
+        int max_len = -1;  // 最长回文长度
+
+        int id;
+        int mx = 0;
+        int len = s_new.size();
+        int p[len] = {0};
+        int index;
+        for (int i = 1; i < s_new.size(); i++)
+        {
+            if (i < mx)
+                p[i] = min(p[2 * id - i], mx - i);
+            else
+                p[i] = 1;
+
+            while (s_new[i - p[i]] == s_new[i + p[i]])
+                p[i]++;
+
+            if (mx < i + p[i]){
+                id = i;
+                mx = i + p[i];
+            }
+            if(p[i] -1 > max_len){
+                max_len = p[i] - 1;
+                index = i;
+            }
+            max_len = max(max_len, p[i] - 1);
+        }
+
+        return s.substr((index - 1 - max_len)/2, max_len);
+    }
+};

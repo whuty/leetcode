@@ -1,0 +1,56 @@
+
+auto ASM2N8=[](){ios::sync_with_stdio(false);return cin.tie(nullptr);}();
+using S=char const*const;
+S A[04]{"","M","MM","MMM"},
+  B[10]{"","C","CC","CCC","CD","D","DC","DCC","DCCC","CM"},
+  C[10]{"","X","XX","XXX","XL","L","LX","LXX","LXXX","XC"},
+  D[10]{"","I","II","III","IV","V","VI","VII","VIII","IX"};
+struct{inline string intToRoman(int num)const{return string(A[num/1000])+B[num/100%10]+C[num/10%10]+D[num%10];}}const _;
+inline auto&Solution(){return _;}
+
+
+static const auto _____ = []() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+};
+class Solution {
+public:
+    string intToRoman(int num) {
+        string s = "";
+        int n = num / 1000;
+        for(int i = 0;i < n;i++){
+            s += "M";
+        }
+        num %= 1000;
+        n = num / 100;
+        if(n == 9) s += "CM";
+        else if(n == 4) s += "CD";
+        else {
+            if(n >= 5) s += "D";
+            for(int i = 0;i < n % 5;i++){
+                s += "C";
+            }
+        }
+        num %= 100;
+        n = num / 10;
+        if(n == 9) s += "XC";
+        else if(n == 4) s += "XL";
+        else {
+            if(n >= 5) s += "L";
+            for(int i = 0;i < n % 5;i++){
+                s += "X";
+            }
+        }
+        num %= 10;
+        n = num;
+        if(n == 9) s += "IX";
+        else if(n == 4) s += "IV";
+        else {
+            if(n >= 5) s += "V";
+            for(int i = 0;i < n % 5;i++){
+                s += "I";
+            }
+        }
+        return s;
+    }
+};

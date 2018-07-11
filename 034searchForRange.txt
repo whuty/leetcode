@@ -1,0 +1,36 @@
+static const auto io_speed_up = []()
+{
+	std::ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+	return 0;
+}();
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> res;
+        int n = nums.size();
+        int l = 0;
+        int r = n - 1;
+        int m;
+        while(l <= r) {
+            m = (l + r) / 2;
+            if(nums[m] == target) {
+                int left = m, right = m;
+                while(left >= 0 && nums[left] == target) {
+                    left--;
+                }
+                while(right <= n - 1 && nums[right] == target) {
+                    right++;
+                }
+                res.push_back(left+1);
+                res.push_back(right-1);
+                return res;
+            }
+            else if(nums[m] < target) l = m + 1;
+            else r = m - 1;
+        }
+        res.push_back(-1);
+        res.push_back(-1);
+        return res;
+    }
+};

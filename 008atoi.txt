@@ -1,0 +1,64 @@
+static const auto _____ = []() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  return nullptr;
+}();
+class Solution {
+public:
+    int myAtoi(string str) {
+        if(str.empty()) return 0;
+        auto offset = 0;
+        auto sign = 1;
+        auto num = 0;
+        while(offset < str.length() && str[offset] == ' ')
+            offset++;
+        if(str[offset]=='-'){
+            sign = -1;
+            offset++;
+        }
+        else if(str[offset]=='+'){
+            offset++;
+        }
+        if(offset == str.length() || str[offset] < '0' || str[offset] > '9'){
+            return 0;
+        }
+        for (auto i = offset; i < str.length(); ++i) {
+			auto c = str[i];
+			auto val = 0;
+			if (c >= '0' && c <= '9')
+				val = c - '0';
+			else
+				break;
+
+			if (num > INT_MAX / 10 || (num == INT_MAX / 10 && val > 7))
+				return sign > 0 ? INT_MAX : INT_MIN;
+
+			num *= 10;
+			num += val;
+		}
+        return num*sign;
+    }
+};
+
+class Solution {
+public:
+   int myAtoi(const std::string& str)
+    {
+        if (str.empty()) return 0;
+        const char * iter = &str[0];
+        const char * end = &str[str.size()];
+        while (std::isspace(*iter)) ++iter;
+        int neg = 1;
+        if (*iter == '-' || *iter == '+') {
+            neg = *iter == '-' ? -1 : 1;
+            ++iter;
+        }
+        long long result = 0;
+        while (std::isdigit(*iter) && iter < end) {
+            result = result * 10 + neg * (*iter++ - '0');
+            if (result > INT_MAX) return INT_MAX;
+            if (result < INT_MIN) return INT_MIN;
+        }
+        return result;
+    }
+};

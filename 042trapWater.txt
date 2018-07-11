@@ -1,0 +1,32 @@
+static const auto __ = []()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+	return nullptr;
+}();
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if(height.size() < 3) return 0;
+        int h = 0;
+        int l = 0;
+        int r = height.size() - 1;
+        int v = 0;
+        int lmax = 0;
+        int rmax = 0;
+        while(l < r) {
+            if(height[l] < height[r]) {
+                if(height[l] < lmax) v += lmax - height[l];
+                else lmax = height[l];
+                l++;
+            }
+            else {
+                if(height[r] < rmax) v += rmax - height[r];
+                else rmax = height[r];
+                r--;
+            }
+        }
+        return v;
+        
+    }
+};

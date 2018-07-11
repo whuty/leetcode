@@ -1,0 +1,22 @@
+static const auto _____ = []() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  return nullptr;
+}();
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x == 0)
+            return true;
+        if (x < 0 || x % 10 == 0)
+            return false;
+        int palindrome_num = 0;
+        
+        while(x > palindrome_num){
+            palindrome_num = palindrome_num * 10 + x % 10;
+            x /= 10;
+        }
+        
+        return x == palindrome_num || x == palindrome_num /10 ;
+    }
+};

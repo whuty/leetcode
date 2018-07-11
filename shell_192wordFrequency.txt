@@ -1,0 +1,115 @@
+# Read from the file words.txt and output the word frequency list to stdout.
+cat words.txt|tr -cs "[a-z][A-Z]" "\n" |tr A-Z a-z |sort |uniq -c |sort -k1nr | awk -F ' ' '{print $2" "$1}'
+
+###
+tr [-cdst][--help][--version][第一字符集][第二字符集]  
+tr [OPTION]…SET1[SET2] 
+
+    -c, --complement：反选设定字符。也就是符合 SET1 的部份不做处理，不符合的剩余部份才进行转换
+    -d, --delete：删除指令字符
+    -s, --squeeze-repeats：缩减连续重复的字符成指定的单个字符
+    -t, --truncate-set1：削减 SET1 指定范围，使之与 SET2 设定长度相等
+    --help：显示程序用法信息
+    --version：显示程序本身的版本信息
+    字符集合的范围：
+
+    \NNN 八进制值的字符 NNN (1 to 3 为八进制值的字符)
+    \\ 反斜杠
+    \a Ctrl-G 铃声
+    \b Ctrl-H 退格符
+    \f Ctrl-L 走行换页
+    \n Ctrl-J 新行
+    \r Ctrl-M 回车
+    \t Ctrl-I tab键
+    \v Ctrl-X 水平制表符
+    CHAR1-CHAR2 ：字符范围从 CHAR1 到 CHAR2 的指定，范围的指定以 ASCII 码的次序为基础，只能由小到大，不能由大到小。
+    [CHAR*] ：这是 SET2 专用的设定，功能是重复指定的字符到与 SET1 相同长度为止
+    [CHAR*REPEAT] ：这也是 SET2 专用的设定，功能是重复指定的字符到设定的 REPEAT 次数为止(REPEAT 的数字采 8 进位制计算，以 0 为开始)
+    [:alnum:] ：所有字母字符与数字
+    [:alpha:] ：所有字母字符
+    [:blank:] ：所有水平空格
+    [:cntrl:] ：所有控制字符
+    [:digit:] ：所有数字
+    [:graph:] ：所有可打印的字符(不包含空格符)
+    [:lower:] ：所有小写字母
+    [:print:] ：所有可打印的字符(包含空格符)
+    [:punct:] ：所有标点字符
+    [:space:] ：所有水平与垂直空格符
+    [:upper:] ：所有大写字母
+    [:xdigit:] ：所有 16 进位制的数字
+    [=CHAR=] ：所有符合指定的字符(等号里的 CHAR，代表你可自订的字符)
+
+sort [-bcdfimMnr][-o<输出文件>][-t<分隔字符>][+<起始栏位>-<结束栏位>][--help][--verison][文件]
+
+    -b 忽略每行前面开始出的空格字符。
+    -c 检查文件是否已经按照顺序排序。
+    -d 排序时，处理英文字母、数字及空格字符外，忽略其他的字符。
+    -f 排序时，将小写字母视为大写字母。
+    -i 排序时，除了040至176之间的ASCII字符外，忽略其他的字符。
+    -m 将几个排序好的文件进行合并。
+    -M 将前面3个字母依照月份的缩写进行排序。
+    -n 依照数值的大小排序。
+    -o<输出文件> 将排序后的结果存入指定的文件。
+    -r 以相反的顺序来排序。
+    -t<分隔字符> 指定排序时所用的栏位分隔字符。
+    +<起始栏位>-<结束栏位> 以指定的栏位来排序，范围由起始栏位到结束栏位的前一栏位。
+    --help 显示帮助。
+    --version 显示版本信息。
+     
+    -k选项的语法格式：
+
+    FStart.CStart Modifie,FEnd.CEnd Modifier
+    -------Start--------,-------End--------
+    FStart.CStart 选项  ,  FEnd.CEnd 选项
+
+    这个语法格式可以被其中的逗号,分为两大部分，Start部分和End部分。Start部分也由三部分组成，
+    其中的Modifier部分就是我们之前说过的类似n和r的选项部分。我们重点说说Start部分的FStart和C.Start。
+    C.Start也是可以省略的，省略的话就表示从本域的开头部分开始。
+    FStart.CStart，其中FStart就是表示使用的域，而CStart则表示在FStart域中从第几个字符开始算“排序首字符”。
+    同理，在End部分中，你可以设定FEnd.CEnd，如果你省略.CEnd，则表示结尾到“域尾”，即本域的最后一个字符。
+    或者，如果你将CEnd设定为0(零)，也是表示结尾到“域尾”。
+
+uniq [-cdu][-f<栏位>][-s<字符位置>][-w<字符位置>][--help][--version][输入文件][输出文件]
+
+    -c或--count 在每列旁边显示该行重复出现的次数。
+    -d或--repeated 仅显示重复出现的行列。
+    -f<栏位>或--skip-fields=<栏位> 忽略比较指定的栏位。
+    -s<字符位置>或--skip-chars=<字符位置> 忽略比较指定的字符。
+    -u或--unique 仅显示出一次的行列。
+    -w<字符位置>或--check-chars=<字符位置> 指定要比较的字符。
+    --help 显示帮助。
+    --version 显示版本信息。
+    [输入文件] 指定已排序好的文本文件。
+    [输出文件] 指定输出的文件。
+
+awk [选项参数] 'script' var=value file(s)
+或
+awk [选项参数] -f scriptfile var=value file(s)
+
+
+    -F fs or --field-separator fs
+    指定输入文件折分隔符，fs是一个字符串或者是一个正则表达式，如-F:。
+    -v var=value or --asign var=value
+    赋值一个用户定义变量。
+    -f scripfile or --file scriptfile
+    从脚本文件中读取awk命令。
+    -mf nnn and -mr nnn
+    对nnn值设置内在限制，-mf选项限制分配给nnn的最大块数目；-mr选项限制记录的最大数目。这两个功能是Bell实验室版awk的扩展功能，在标准awk中不适用。
+    -W compact or --compat, -W traditional or --traditional
+    在兼容模式下运行awk。所以gawk的行为和标准的awk完全一样，所有的awk扩展都被忽略。
+    -W copyleft or --copyleft, -W copyright or --copyright
+    打印简短的版权信息。
+    -W help or --help, -W usage or --usage
+    打印全部awk选项和每个选项的简短说明。
+    -W lint or --lint
+    打印不能向传统unix平台移植的结构的警告。
+    -W lint-old or --lint-old
+    打印关于不能向传统unix平台移植的结构的警告。
+    -W posix
+    打开兼容模式。但有以下限制，不识别：/x、函数关键字、func、换码序列以及当fs是一个空格时，将新行作为一个域分隔符；操作符**和**=不能代替^和^=；fflush无效。
+    -W re-interval or --re-inerval
+    允许间隔正则表达式的使用，参考(grep中的Posix字符类)，如括号表达式[[:alpha:]]。
+    -W source program-text or --source program-text
+    使用program-text作为源代码，可与-f命令混用。
+    -W version or --version
+    打印bug报告信息的版本。

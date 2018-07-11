@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string countAndSay(int n) {
+        string s = "1";
+        if(n == 1) return s;
+        string tmp;
+        
+        while(n > 1){
+            string now = "";
+            int j;
+            for(int i = 0; i < s.size();i += j){
+                for(j = 1; i + j < s.size(); j++){
+                    if(s[i] != s[i+j]) break;
+                }
+                now.push_back(j+'0');
+                now.push_back(s[i]);
+            }
+            s = now;
+            n--;
+        }
+        return s;
+    }
+};

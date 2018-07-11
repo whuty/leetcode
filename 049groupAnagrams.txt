@@ -1,0 +1,26 @@
+static const auto _=[](){
+    std::ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    return nullptr;
+}();
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> res;
+        if(strs.empty()) return res;
+        unordered_map<string,int> anagrams;
+
+	    int index = 0;
+        for(string str : strs){
+            string t = str;
+            sort(t.begin(),t.end());
+            if(anagrams.find(t) == anagrams.end()) {
+                anagrams[t] = index++;
+                res.push_back({str});
+            }
+            else res[anagrams[t]].push_back(str);
+        }
+        
+        return res;
+    }
+};

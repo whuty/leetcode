@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if(nums.empty()) return 0;
+        vector<int>::iterator it = nums.begin();
+        vector<int>::iterator that = nums.begin();
+        while(it != nums.end()){
+            if(*it != *that) {that = it; it++;}
+            else if(it != that) it = nums.erase(it);
+            else it++;
+        }
+        return nums.size();
+    }
+};
+
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if (nums.size() == 0) return 0;
+        if (nums.size() == 1) return 1;
+        int i = 0;
+        for (int j = 1; j < nums.size(); j++) {
+            if (nums[j] != nums[i]) {
+                i++;
+                nums[i] = nums[j];
+            }
+        }
+        return i + 1;
+    }
+};

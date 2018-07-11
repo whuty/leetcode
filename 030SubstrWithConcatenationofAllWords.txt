@@ -1,0 +1,49 @@
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        vector<int> result;
+        if (words.size() == 0) {
+            return result;
+        }
+        
+        unordered_map<string, int> hash;
+        for (int i = 0; i < words.size(); i++) {
+            if (hash.find(words[i]) == hash.end()) {
+                hash[words[i]] = 1;
+            } else {
+                hash[words[i]]++;
+            }
+        }
+        
+        int wSize = words[0].length();
+        for (int start = 0; start < wSize; start++) {
+            int wCount = 0;
+            unordered_map<string, int> slidingWindow;
+            for (int i = start; i + wSize <= s.length(); i+=wSize) {
+                string word = s.substr(i, wSize);
+                if (hash.find(word) == hash.end()) {
+                    slidingWindow.clear();
+                    wCount = 0;
+                } else {
+                    wCount++;
+                    if (slidingWindow.find(word) == slidingWindow.end()) {
+                        slidingWindow[word] = 1;
+                    } else {
+                        slidingWindow[word]++;
+                    }
+                    while (hash[word] < slidingWindow[word]) {
+                        string removedWord = s.substr(i - (wCount-1) * wSize, wSize);
+                        slidingWindow[removedWord]--;
+                        wCount--;
+                    }
+                }
+                
+                if (wCount == words.size()) {
+                    result.push_back(i - (wCount - 1) * wSize);
+                }
+            }
+        }
+        
+        return result;
+    }
+};

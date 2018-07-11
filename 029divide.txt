@@ -1,0 +1,33 @@
+
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if (dividend == 0 || divisor == 0) return 0;
+         
+        bool sig = (dividend > 0 && divisor < 0) ||
+                   (dividend < 0 && divisor > 0);
+        
+        long a = abs((long long) dividend);
+        long b = abs((long long) divisor);
+         
+        if(b > a) return 0;
+
+        long long sum = 0;
+        long long _pow = 0;
+        long long res = 0;
+        
+        while(a >= b) {
+            _pow = 1;
+            sum = b;
+            while (a >= sum + sum){
+                sum += sum;
+                _pow += _pow;
+            }
+            a -= sum;
+            res += _pow;
+        } 
+        
+        res = sig ? -res : res; 
+        return (res < INT_MIN || res > INT_MAX) ? (1<<31)-1 :  res;
+    }
+};

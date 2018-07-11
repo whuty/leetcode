@@ -1,0 +1,22 @@
+static const auto _____ = []() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+};
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        if(s.empty()) return 0;
+        int ans = 0,j = 0;
+        int chr[128] = {0};
+        for(int i = 0;i < s.size();i++){
+            unsigned int index = (unsigned int)s[i] ;
+            if(chr[index] == 0 || chr[index] < j){
+                ans = max(ans,i-j+1);
+            }else{
+                j = chr[index];
+            }
+            chr[index] = i+1;
+        }
+        return ans;
+    }
+};

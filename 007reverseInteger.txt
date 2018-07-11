@@ -1,0 +1,33 @@
+static const auto _____ = []() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  return nullptr;
+}();
+class Solution {
+public:
+    int reverse(int x) {
+        if(x == INT_MIN) return 0;
+        int res[10];
+        int sign,n;
+        if(x >= 0){
+            sign = 1;
+            n = x;
+        }else {
+            sign = -1;
+            n = -x;
+        }
+        int i;
+        for(i = 0;i < 10;i++){
+            res[i] = n % 10;
+            n = n / 10;
+            if(n == 0) break;
+        }
+        for(int j = 0;j <= i;j++){
+            if (n > INT_MAX / 10 || (n == INT_MAX / 10 && res[i] > 7))
+                return 0;
+            n *= 10;
+            n += res[j];
+        }
+        return sign*n;
+    }
+};
