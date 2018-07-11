@@ -1,0 +1,48 @@
+
+将字符串 "PAYPALISHIRING" 以Z字形排列成给定的行数：
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+之后从左往右，逐行读取字符："PAHNAPLSIIGYIR"
+
+实现一个将字符串进行指定行数变换的函数:
+
+string convert(string s, int numRows);
+示例 1:
+
+输入: s = "PAYPALISHIRING", numRows = 3
+输出: "PAHNAPLSIIGYIR"
+示例 2:
+
+输入: s = "PAYPALISHIRING", numRows = 4
+输出: "PINALSIGYAHRPI"
+解释:
+
+P     I    N
+A   L S  I G
+Y A   H R
+P     I
+
+
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        int length = s.length();
+        if(length<numRows || numRows <= 1) return s;
+        char res[length + 1];
+        int n = numRows - 1;
+        int index = 0;
+        for(int i = 0;i <= n;i++){
+            res[index++] = s[i];
+            int next = i + 2 * (n - i % n);
+            while(next < length){
+                res[index++] = s[next];
+                next = next + 2 * (n - next % n);
+            }
+        }
+        res[length] = '\0';
+        string r = res;
+        return r;
+    }
+};

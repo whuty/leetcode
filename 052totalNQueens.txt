@@ -1,0 +1,27 @@
+// 给定一个整数 n，返回 n 皇后不同的解决方案的数量。
+
+class Solution {
+private:
+    int upperlim;
+    int res;
+public:
+    int totalNQueens(int n) {
+        res = 0;
+        upperlim = (1<<n)-1;
+        helper(0,0,0);
+        return res;
+    }
+    
+    void helper(const int row, const int ld, const int rd) {
+        int pos,p;
+        if(row != upperlim){
+            pos = upperlim & (~(row | ld | rd));
+            while(pos) {
+                p = pos & (~pos + 1);
+                pos = pos - p;
+                helper(row | p,(ld | p) << 1,(rd | p) >> 1);
+            }
+        }
+        else res++;
+    }
+};
